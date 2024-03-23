@@ -1,15 +1,16 @@
-class AddressDistance:
-
-    def __init__(self):
+from HandleCsv import *
 
 
-        foo = "410 S State St"
-        bar = "195 W Oakland Ave"
+new_lines = HandleCsv("DistanceTable.csv")
+tarfu = new_lines.read_csv()
 
-        address1 = data_lines[0].index(bar)
-        address2 = data_lines[0].index(foo)
+foo = "410 S State St"
+bar = "195 W Oakland Ave"
 
-        if data_lines[address1][address2] == "":
-            print(data_lines[address2][address1])
-        else:
-            print(data_lines[address1][address2])
+address1 = tarfu[0].index(bar)
+address2 = tarfu[0].index(foo)
+
+if tarfu[address1][address2] == "":
+    print(tarfu[address2][address1])
+else:
+    print(tarfu[address1][address2])
