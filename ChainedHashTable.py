@@ -7,7 +7,6 @@ class ChainedHashTable:
 
     def insert(self, key, item):
         bucket = hash(key) % len(self.table)
-        print(bucket)
         bucket_list = self.table[bucket]
 
         for key_val in bucket_list:

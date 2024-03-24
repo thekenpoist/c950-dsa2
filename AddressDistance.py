@@ -1,16 +1,22 @@
+
 from HandleCsv import *
 
 
-new_lines = HandleCsv("DistanceTable.csv")
-tarfu = new_lines.read_csv()
+class AddressDistance:
 
-foo = "410 S State St"
-bar = "195 W Oakland Ave"
+    def __init__(self, ):
+        pass
 
-address1 = tarfu[0].index(bar)
-address2 = tarfu[0].index(foo)
+    def address_distance(self, distance_table, address1, address2):
 
-if tarfu[address1][address2] == "":
-    print(tarfu[address2][address1])
-else:
-    print(tarfu[address1][address2])
+        handle_csv = HandleCsv(distance_table)
+        address1 = address1
+        address2 = address2
+
+        distance_file = self.handle_csv.read_csv()
+        print(distance_file)
+
+        if distance_file[address1][address2] == "":
+            print(distance_file[address2][address1])
+        else:
+            print(distance_file[address1][address2])

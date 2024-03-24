@@ -1,11 +1,9 @@
-
 import Packages
-from HandleCsv import *
 from ChainedHashTable import *
 
 
 class PackageLoader:
-     
+
     def __init__(self, csv_handler):
         self.csv_handler = csv_handler
 
@@ -21,22 +19,11 @@ class PackageLoader:
             packDeadline = line[5]
             packWeight = line[6]
             packNotes = line[7]
-            packStatus = "Hub"
+            packStatus = "At Hub"
 
             p = Packages.Packages(packID, packStreet, packCity, packState, packZip,
-                        packDeadline, packWeight, packNotes, packStatus)
-            #print(p)
+                                  packDeadline, packWeight, packNotes, packStatus)
+
             package_hash.insert(packID, p)
-        
-        print(package_hash.search(33))
 
-
-def main():
-
-
-    handle_csv = HandleCsv("PackageFile.csv")
-    p_loader = PackageLoader(handle_csv.read_csv())
-    p_loader.package_loader()
-
-
-main()
+        return package_hash
