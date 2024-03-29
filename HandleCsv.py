@@ -1,4 +1,6 @@
 import csv
+# This is a class specifically written by Steve Hull (me)  
+# for handling reading in .csv files
 
 class HandleCsv:
 

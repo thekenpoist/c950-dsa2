@@ -1,6 +1,6 @@
 class ChainedHashTable:
 
-    def __init__(self, init_cap=10):
+    def __init__(self, init_cap=11):
         self.table = []
         for i in range(init_cap):
             self.table.append([])
