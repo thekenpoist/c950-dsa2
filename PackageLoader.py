@@ -19,15 +19,14 @@ class PackageLoader:
             packDeadline = line[5]
             packWeight = line[6]
             packNotes = line[7]
-            packMileage = 0
-            packDeliveryTime = 0
+            packTruck = " "
+            packDeliveryTime = " "
             packStatus = "At Hub"
 
             p = Packages.Packages(packID, packStreet, packCity, packState, packZip,
-                                  packDeadline, packWeight, packNotes, packMileage, 
+                                  packDeadline, packWeight, packNotes, packTruck,
                                   packDeliveryTime, packStatus)
 
             package_hash.insert(packID, p)
-            
-        #print(type(package_hash))
+
         return package_hash

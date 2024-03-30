@@ -29,26 +29,13 @@ def main():
 
     # print(package_loader.search(20).status)
 
-    # Currently sorting things out without an algorithm in place
-    # this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     near_neighbor = NearestNeighbor()
     print(near_neighbor.nearest_neighbor(package_loader, distance_file))
 
-   
-
-
-    '''
-    address1 = package_loader.search(20).street
-    address2 = package_loader.search(19).street#$#
-
-    handle_csv = HandleCsv(distance_table)
-    distance_file = handle_csv.read_csv()
-    distance_between_addreses = DistanceBetweenAddresses()
-    
-    distance = distance_between_addreses.address_distance(distance_file, address1, address2)
-    print(distance)
-
-    '''
+    # i = 0
+    # while i < 41:
+    # print(package_loader.search(i))
+    # i += 1
 
 
 if __name__ == "__main__":
