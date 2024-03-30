@@ -13,71 +13,71 @@ class NearestNeighbor:
     def nearest_neighbor(self, package_loader, distance_file):
 
         distance_between_addreses = DistanceBetweenAddresses()
-        travel_time = 0
 
-        #
+        # [1, 13, 15, 16, 20, 29, 34, 14]
 
         truck1 = DeliveryTruck.DeliveryTruck("Truck One", 16, datetime.timedelta(hours=8), "4001 South 700 East",
-                                             "4001 South 700 East", [1, 13, 14, 15, 16, 20, 29, 34, 40], [19, 2, 4, 5, 7, 8, 10])
+                                             "4001 South 700 East", [1, 2, 4, 7, 13, 14, 15, 16, 20, 21, 29, 33, 34, 39, 40])
+
+        truck2 = DeliveryTruck.DeliveryTruck("Truck Two", datetime.timedelta(hours=9, minutes=5), "4001 South 700 East",
+                                             "4001 South 700 East", [6, 25, 30, 31, 37], [3, 18, 36, 38, 11, 12, 17, 21, 22, 23, 24])
+
+        truck3 = DeliveryTruck.DeliveryTruck("Truck Three", datetime.timedelta(hours=12), "4001 South 700 East",
+                                             "4001 South 700 East", [], [9, 26, 27, 28, 32, 33, 35, 39])
 
         truck = truck1
-
-        
-
-        i = 0
-        j = 0
-        total_distance = 0
-        temp_distance = 9999999999
-
         current_address = truck.current_location
+        travel_time = truck.start_time
+        total_distance = 0
 
-        while i < len(truck.priority_packages):
+        while len(truck.packages) > 0:
 
-            next_address = package_loader.search(
-                truck.priority_packages[i]).street
+            i = 0
+            j = 0
+            temp_distance = 9999999999
 
-            distance = distance_between_addreses.address_distance(
-                distance_file, current_address, next_address)
+            while i < len(truck.packages):
 
-            print("Distance", distance)
+                next_address = package_loader.search(
+                    truck.packages[i]).street
 
-            if float(distance) <= temp_distance:
-                temp_distance = float(distance)
-                j = i
+                distance = distance_between_addreses.address_distance(
+                    distance_file, current_address, next_address)
 
-            if i == len(truck.priority_packages):
-                current_address = next_address
-                break
+                if float(distance) <= temp_distance:
+                    temp_distance = float(distance)
+                    j = i
 
-            print("Temp distance", temp_distance)
-            i += 1
+                i += 1
 
-        travel_time = truck.start_time + \
-            datetime.timedelta(hours=float(distance) / 18)
+            current_address = package_loader.search(
+                truck.packages[j]).street
 
-        status = "Delivered"
+            travel_time = travel_time + \
+                datetime.timedelta(hours=float(temp_distance) / 18)
 
-        print(j)
-        ID = package_loader.search(truck.priority_packages[j]).ID
-        street = package_loader.search(truck.priority_packages[j]).street
-        city = package_loader.search(truck.priority_packages[j]).city
-        state = package_loader.search(truck.priority_packages[j]).state
-        zip = package_loader.search(truck.priority_packages[j]).zip
-        deadline = package_loader.search(truck.priority_packages[j]).deadline
-        weight = package_loader.search(truck.priority_packages[j]).weight
-        notes = package_loader.search(truck.priority_packages[j]).notes
+            status = "Delivered"
 
-        p = Packages.Packages(ID, street, city, state, zip, deadline,
-                              weight, notes, truck.truck_number, str(travel_time), status)
+            total_distance = total_distance + temp_distance
 
-        package_loader.insert(ID, p)
-        truck.priority_packages.pop(j)
+            ID = package_loader.search(truck.packages[j]).ID
+            street = package_loader.search(truck.packages[j]).street
+            city = package_loader.search(truck.packages[j]).city
+            state = package_loader.search(truck.packages[j]).state
+            zip = package_loader.search(truck.packages[j]).zip
+            deadline = package_loader.search(
+                truck.packages[j]).deadline
+            weight = package_loader.search(truck.packages[j]).weight
+            notes = package_loader.search(truck.packages[j]).notes
 
-        print(p)
+            p = Packages.Packages(ID, street, city, state, zip, deadline,
+                                  weight, notes, truck.truck_number, str(travel_time), status)
 
-        print()
-        print()
+            package_loader.insert(ID, p)
+            # print(truck.packages)
+            truck.packages.pop(j)
+            # print(truck.packages)
 
-        total_distance = total_distance + float(distance)
+            print(temp_distance, " --- ", p)
 
         return total_distance

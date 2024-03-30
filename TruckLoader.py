@@ -9,8 +9,8 @@ class TruckLoader:
 
     def truck_loader(self):
 
-        truck1 = DeliveryTruck(16, datetime.timedelta(hours=8),"4001 South 700 East", 
-                               "4001 South 700 East", [1,13,14,15,16,20,29,34,40],[19,2,4,5,7,8,10])
+        truck1 = DeliveryTruck.DeliveryTruck("Truck One", 16, datetime.timedelta(hours=8), "4001 South 700 East",
+                                             "4001 South 700 East", [1, 2, 4, 7, 13, 14, 15, 16, 20, 21, 29, 33, 34, 39, 40])
         
         print(type(truck1))
         #return truck1
