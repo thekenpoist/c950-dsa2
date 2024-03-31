@@ -1,7 +1,7 @@
 from PackageLoader import *
 from DistanceBetweenAddresses import *
 from HandleCsv import *
-from NearestNeighbor import *
+from DeliverPackages import *
 from PackageLookUp import *
 
 
@@ -19,13 +19,19 @@ def main():
     handle_csv = HandleCsv(distance_table)
     distance_file = handle_csv.read_csv()
 
-    near_neighbor = NearestNeighbor()
-    print(near_neighbor.nearest_neighbor(package_loader, distance_file))
+    deliver_packages = DeliverPackages()
+    deliver_packages.deliver_packages(package_loader, distance_file)
 
-    # i = 0
-    # while i < 41:
-    # print(package_loader.search(i))
-    # i += 1
+    i = 1
+    total_mileage = 0
+    while i < 41:
+        if package_loader.search(i).truck == "Truck Three":
+            total_mileage = total_mileage + \
+                package_loader.search(i).delivery_mileage
+            print(package_loader.search(i))
+        i += 1
+
+    print("{:.1f}".format(total_mileage))
 
 
 if __name__ == "__main__":

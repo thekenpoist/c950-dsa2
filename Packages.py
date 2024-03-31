@@ -1,6 +1,6 @@
 class Packages:
 
-    def __init__(self, ID, street, city, state, zip, deadline, weight, notes, truck, delivery_time, status):
+    def __init__(self, ID, street, city, state, zip, deadline, weight, notes, truck, delivery_time, delivery_mileage, status):
         self.ID = ID
         self.street = street
         self.city = city
@@ -11,10 +11,12 @@ class Packages:
         self.notes = notes
         self.truck = truck
         self.delivery_time = delivery_time
+        self.delivery_mileage = delivery_mileage
         self.status = status
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s, %s" % (self.ID, self.street, self.city,
-                                                               self.state, self.zip, self.deadline,
-                                                               self.weight, self.notes, self.truck,
-                                                               self.delivery_time, self.status)
+        return "%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s, %s, %s" % (self.ID, self.street, self.city,
+                                                                   self.state, self.zip, self.deadline,
+                                                                   self.weight, self.notes, self.truck,
+                                                                   self.delivery_time, self.delivery_mileage,
+                                                                   self.status)
