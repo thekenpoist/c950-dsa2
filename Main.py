@@ -19,16 +19,6 @@ def main():
     handle_csv = HandleCsv(distance_table)
     distance_file = handle_csv.read_csv()
 
-    # Don't forget this!!!!!!!!!!!!!!!!
-    # print(package_loader.search(1))
-
-    # print(package_loader.remove(1))
-    # print(package_loader.search(1))
-    # package_loader.insert(1, 'f00')
-    # print(package_loader.search(1))
-
-    # print(package_loader.search(20).status)
-
     near_neighbor = NearestNeighbor()
     print(near_neighbor.nearest_neighbor(package_loader, distance_file))
 
