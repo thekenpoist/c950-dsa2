@@ -18,7 +18,7 @@ class DeliverPackages:
         while len(truck3.packages) != 0:
             if len(truck1.packages) != 0:
                 truck = truck1
-            # STEVE, DON'T FORGET ABOUT THE ADDRESS CHANGE AT 10:20. NEW ADRESS NEEDS TO BE UPDATED IN THE HASH TABLE WHEN TRUCK LEAVES THE HUB
+            # STEVE, DON'T FORGET ABOUT THE ADDRESS CHANGE AT 10:20. NEW ADRESS NEEDS TO BE UPDATED IN THE HASH TABLE WHEN TRUCK TWO LEAVES THE HUB
             elif len(truck2.packages) != 0:
                 truck = truck2
             else:
@@ -69,12 +69,11 @@ class DeliverPackages:
                 notes = package_loader.search(truck.packages[j]).notes
 
                 p = Packages.Packages(ID, street, city, state, zip, deadline,
-                                      weight, notes, truck.truck_number, str(travel_time), temp_distance, status)
+                                      weight, notes, truck.truck_number, travel_time, temp_distance, status)
 
                 package_loader.insert(ID, p)
 
                 truck.packages.pop(j)
 
-                print(temp_distance, " --- ", p)
-            print("foo")
+               
             # DON'T FORGET TO CALCULATE THE RETURN MILEAGE TO THE HUB FOR TRUCK ONE!!!

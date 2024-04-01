@@ -21,14 +21,20 @@ def main():
 
     deliver_packages = DeliverPackages()
     deliver_packages.deliver_packages(package_loader, distance_file)
-
+    
+    
+    h = 9
+    m = 28
     i = 1
     total_mileage = 0
-    while i < 41:
-        if package_loader.search(i).truck == "Truck Three":
+    while i < 41:                           # Search by time
+        if package_loader.search(i).delivery_time <= datetime.timedelta(hours=h, minutes=m): 
             total_mileage = total_mileage + \
                 package_loader.search(i).delivery_mileage
-            print(package_loader.search(i))
+            print(package_loader.search(i).ID, package_loader.search(i).street, 
+                  package_loader.search(i).city, package_loader.search(i).zip,
+                  package_loader.search(i).weight, package_loader.search(i).deadline,
+                  package_loader.search(i).delivery_time, package_loader.search(i).status)
         i += 1
 
     print("{:.1f}".format(total_mileage))
