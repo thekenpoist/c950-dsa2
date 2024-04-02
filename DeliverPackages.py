@@ -56,8 +56,6 @@ class DeliverPackages:
 
                 status = "Delivered"
 
-                # CONSIDER MAKING THIS IT'S OWN FILE!!!
-
                 ID = package_loader.search(truck.packages[j]).ID
                 street = package_loader.search(truck.packages[j]).street
                 city = package_loader.search(truck.packages[j]).city
@@ -76,3 +74,4 @@ class DeliverPackages:
                 truck.packages.pop(j)
 
             # DON'T FORGET TO CALCULATE THE RETURN MILEAGE TO THE HUB FOR TRUCK ONE!!!
+                

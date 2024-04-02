@@ -22,30 +22,37 @@ def main():
     deliver_packages = DeliverPackages()
     deliver_packages.deliver_packages(package_loader, distance_file)
 
-    start_hour = 12
-    start_minute = 3
-    end_hour = 12
-    end_minute = 12
+    hour = 10
+    minute = 20
     i = 1
     total_mileage = 0
 
+    print("------------------------------------------------------------------------------------------------------------------------------")
+    print("ID   Address                                 City              Zip     Weight  Deadline  Truck        Status     Delivery Time")
+    print("------------------------------------------------------------------------------------------------------------------------------")
+
     while i < 41:                           # Search by time
-        if package_loader.search(i).truck == "Truck Two":
-            if package_loader.search(i).start_time > datetime.timedelta(hours=end_hour, minutes=end_minute):
-                status = "At Hub"
-            elif package_loader.search(i).start_time >= datetime.timedelta(hours=start_hour, minutes=start_minute) or package_loader.search(i).delivery_time > datetime.timedelta(hours=end_hour, minutes=end_minute):
-                status = "In Route"
-            else:
-                status = package_loader.search(i).status
+        if package_loader.search(i).start_time > datetime.timedelta(hours=hour, minutes=minute):
+            status = "At Hub"
+        elif datetime.timedelta(hours=hour, minutes=minute) >= package_loader.search(i).start_time and datetime.timedelta(hours=hour, minutes=minute) < package_loader.search(i).delivery_time:
+            status = "In Route"
+        else:
+            status = package_loader.search(i).status
 
-            total_mileage = total_mileage + \
+        total_mileage = total_mileage + \
                 package_loader.search(i).delivery_mileage
-
-            print(package_loader.search(i).ID, package_loader.search(i).street,
+        
+        if status == "Delivered":
+            print('{:2d}   {:39} {:17} {:7} {:7} {:9} {:12} {:10} {}'.format(package_loader.search(i).ID, package_loader.search(i).street,
                   package_loader.search(i).city, package_loader.search(i).zip,
-                  package_loader.search(
-                i).weight, package_loader.search(i).deadline, package_loader.search(i).truck,
-                package_loader.search(i).delivery_time, status)
+                  package_loader.search(i).weight, package_loader.search(i).deadline,
+                  package_loader.search(i).truck, status, package_loader.search(i).delivery_time))
+        #print("------------------------------------------------------------------------------------------------------------------------------")
+        else:
+            print('{:2d}   {:39} {:17} {:7} {:7} {:9} {:12} {:10}'.format(package_loader.search(i).ID, package_loader.search(i).street,
+                  package_loader.search(i).city, package_loader.search(i).zip,
+                  package_loader.search(i).weight, package_loader.search(i).deadline,
+                  package_loader.search(i).truck, status))
 
         i += 1
 
