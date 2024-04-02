@@ -25,7 +25,7 @@ class DeliverPackages:
                 truck = truck3
 
             current_address = truck.start_location
-            travel_time = truck.start_time
+            delivery_time = truck.start_time
 
             # Nearest Neighbor algorithm starts here!!!
             while len(truck.packages) > 0:
@@ -51,7 +51,7 @@ class DeliverPackages:
                 current_address = package_loader.search(
                     truck.packages[j]).street
 
-                travel_time = travel_time + \
+                delivery_time = delivery_time + \
                     datetime.timedelta(hours=float(temp_distance) / 18)
 
                 status = "Delivered"
@@ -69,11 +69,10 @@ class DeliverPackages:
                 notes = package_loader.search(truck.packages[j]).notes
 
                 p = Packages.Packages(ID, street, city, state, zip, deadline,
-                                      weight, notes, truck.truck_number, travel_time, temp_distance, status)
+                                      weight, notes, truck.truck_number, delivery_time, truck.start_time, temp_distance, status)
 
                 package_loader.insert(ID, p)
 
                 truck.packages.pop(j)
 
-               
             # DON'T FORGET TO CALCULATE THE RETURN MILEAGE TO THE HUB FOR TRUCK ONE!!!
