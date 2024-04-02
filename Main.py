@@ -2,7 +2,6 @@ from PackageLoader import *
 from DistanceBetweenAddresses import *
 from HandleCsv import *
 from DeliverPackages import *
-from PackageLookUp import *
 
 
 package_file = "PackageFile.csv"
@@ -22,7 +21,7 @@ def main():
     deliver_packages = DeliverPackages()
     deliver_packages.deliver_packages(package_loader, distance_file)
 
-    hour = 10
+    hour = 14
     minute = 20
     i = 1
     total_mileage = 0
@@ -56,7 +55,7 @@ def main():
 
         i += 1
 
-    # print("{:.1f}".format(total_mileage))
+    print("Total mileage for all trucks is: {:.1f} miles".format(total_mileage))
 
 
 if __name__ == "__main__":
