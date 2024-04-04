@@ -1,3 +1,7 @@
+# This module was created by Steve Hull, WGU ID# 011096053 and is all original code.
+# The DeliverTruck module contains the necessary code to create a truck object,
+# and returns a string representation of the delivery truck
+
 class DeliveryTruck:
 
     def __init__(self, truck_number, start_time, start_location, packages):
@@ -7,6 +11,6 @@ class DeliveryTruck:
         self.start_location = start_location
         self.packages = packages
 
-    def __str__(self):
+    def __str__(self):  # Return a string represntation of the delivery truck
         return '%s, %s, %s, %s, %s, %s, %s' % (self.truck_number, self.start_time,
                                                self.start_location, self.packages)
