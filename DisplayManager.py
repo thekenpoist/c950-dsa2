@@ -8,11 +8,11 @@ class DisplayManager:
 
     def set_header(self):
         
-        os.system('cls' if os.name == 'nt' else 'clear')
+        #os.system('cls' if os.name == 'nt' else 'clear')
 
-        print("------------------------------------------------------------------------------------------------------------------------------")
-        print("ID   Address                                 City              Zip     Weight  Deadline  Truck        Status     Delivery Time")
-        print("------------------------------------------------------------------------------------------------------------------------------")
+        print("--------------------------------------------------------------------------------------------------------------------------------------")
+        print("ID   Address                                 City              Zip     Weight  Deadline  Truck        Status             Delivery Time")
+        print("--------------------------------------------------------------------------------------------------------------------------------------")
 
 
     def display_all_packages(self, package_loader):
@@ -36,11 +36,16 @@ class DisplayManager:
             i += 1
 
         total_mileage = total_mileage + float(package_loader.search(11096053).delivery_mileage)
-        print("Total mileage for all trucks is: {:.1f} miles".format(total_mileage))
+        print("Total mileage for all trucks (including return mileage to The Hub for Truck One): {:.1f} miles".format(total_mileage))
+
+        return
     
 
-
     def display_by_truck(self, package_loader, truck_number):
+
+        if truck_number < '1' or truck_number > '3':
+            print("Invalid truck number!")
+            return
         
         i = 1
 
@@ -64,6 +69,9 @@ class DisplayManager:
                                                                                 package_loader.search(i).status, 
                                                                                 package_loader.search(i).delivery_time))
             i += 1
+
+        return
+
 
     def display_by_time(self, package_loader, hour, minute):
         
@@ -106,9 +114,16 @@ class DisplayManager:
 
             i += 1
 
+        return
+
+
     def display_one_package(self, package_loader, pack_id):
 
         pack_id = int(pack_id)
+
+        if pack_id < 1 or pack_id > 40:
+            print("Invalid package number!")
+            return
 
         self.set_header()
 
@@ -121,5 +136,7 @@ class DisplayManager:
                                                                          package_loader.search(pack_id).truck, 
                                                                          package_loader.search(pack_id).status, 
                                                                          package_loader.search(pack_id).delivery_time))
+        
+        return
 
     

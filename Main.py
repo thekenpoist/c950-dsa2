@@ -40,51 +40,51 @@ def main():
     display = DisplayManager()
 
 
-
-
-
-
     choice = ""
-    os.system('cls' if os.name == 'nt' else 'clear')
 
-    print("Welcome to the WGUPS delivery application.")
+    while True:
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
 
-    while choice != '1' or choice != '2' or choice != '3' or choice != '4' or choice != '5':
+        print("Welcome to the WGUPS delivery application...\n")
 
-        print("Select from one of the following options:")
-        print("1. View package status by ID")
-        print("2. View package status by truck")
-        print("3. View package status by time")
-        print("4. View all package status and total mileage")
-        print("5. Quit")
+        while choice != '1' or choice != '2' or choice != '3' or choice != '4' or choice != '5':
 
-        choice = input("Please enter a selection(1-5):")
-        if choice == '1' or choice == '2' or choice == '3' or choice == '4' or choice == '5':
-            break
-        else:
-            print("Invalid selection\n\n")
-            
+            print("Select from one of the following options or 'q' to quit:")
+            print("1. View package status by ID")
+            print("2. View package status by truck")
+            print("3. View package status by time")
+            print("4. View all package status and total mileage")
 
+            choice = input("Please enter a selection(1-5):")
+            if choice == '1' or choice == '2' or choice == '3' or choice == '4' or choice == 'q':
+                break
+            else:
+                print("Invalid selection\n\n")
 
-    match choice:
-        case '1':
-            pack_id = input("Enter a package ID(1-40):")
-            display.display_one_package(package_loader, pack_id)
-            
-        case '2':
-            truck_num = input("Enter a truck number(1-3):")
-            display.display_by_truck(package_loader, truck_num)
+        match choice:
+            case '1':
+                pack_id = input("Enter a package ID(1-40):")
+                display.display_one_package(package_loader, pack_id)
+                again = input("\nPress return to continue:")
+                
+            case '2':
+                truck_num = input("Enter a truck number(1-3):")
+                display.display_by_truck(package_loader, truck_num)
+                again = input("\nPress return to continue:")
+                
+            case '3':
+                hour = input("Enter the hour(0-23):")
+                minute = input("Enter the minute(0-59):")
+                display.display_by_time(package_loader, hour, minute)
+                again = input("\nPress return to continue:")
+                
+            case '4':
+                display.display_all_packages(package_loader)
+                again = input("\nPress return to continue:")
 
-        case '3':
-            hour = input("Enter the hour(0-23):")
-            minute = input("Enter the minute(0-59):")
-            display.display_by_time(package_loader, hour, minute)
-            
-        case '4':
-            display.display_all_packages(package_loader)
-
-        case '5':
-            quit()
+            case 'q':
+                quit()
     
 
 
