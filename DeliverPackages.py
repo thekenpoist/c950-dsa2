@@ -1,6 +1,9 @@
 # This module was created by Steve Hull, WGU ID# 011096053 and is all original code.
 # The DeliverPackages module contains the necessary code to calculate the best route between two addresses
-# using a Nearest Neighbor Algorithm. Comments in the code provide information about the program flow
+# using a Nearest Neighbor Algorithm. This is where the majority of the work of wgups application happens.
+# In this module the packages are removed from the trucks and processed for delivery using 
+# a Nearest Neighbor Algorithm, accomodating all of the time restrictions and other delivery requirements.
+# Comments in the code provide information about the program flow
 
 # Import the datetime module - needed to track travel time
 import datetime

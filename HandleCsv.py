@@ -2,7 +2,7 @@
 # The HandleCsv module contains the necessary code to read in data from a .csv file
 # Comments in the code provide information about the program flow
 
-# Import the csv module - needed to read, write, and create .csv files
+# Import the csv module - needed to read the C950 Course provided .csv files
 import csv
 
 
