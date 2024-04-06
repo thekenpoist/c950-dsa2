@@ -1,5 +1,4 @@
-# Steve Hull
-# WGU ID# 011096053
+# Steve Hull WGU ID# 011096053
 # C950 - Data Structures and Algorithms II
 # NHP3 TASK 2: WGUPS ROUTING PROGRAM IMPLEMENTATION
 

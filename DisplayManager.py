@@ -133,15 +133,25 @@ class DisplayManager:
                                                                                  status, 
                                                                                  package_loader.search(i).delivery_time))
             else:
-                # Print data to the screen
-                print('{:2d}   {:39} {:17} {:7} {:7} {:9} {:12} {:18}'.format(package_loader.search(i).ID, 
-                                                                              package_loader.search(i).street,
-                                                                              package_loader.search(i).city, 
-                                                                              package_loader.search(i).zip,
-                                                                              package_loader.search(i).weight, 
-                                                                              package_loader.search(i).deadline,
-                                                                              package_loader.search(i).truck, 
-                                                                              status))
+                # Package 9 can't show the new delivery address until 10:20
+                if i == 9 and datetime.timedelta(hours=hour, minutes=minute) < datetime.timedelta(hours=10, minutes=20):
+                    print('{:2d}   {:39} {:17} {:7} {:7} {:9} {:12} {:18}'.format(package_loader.search(i).ID, 
+                                                                                '300 State St',
+                                                                                package_loader.search(i).city, 
+                                                                                '84103',
+                                                                                package_loader.search(i).weight, 
+                                                                                package_loader.search(i).deadline,
+                                                                                package_loader.search(i).truck, 
+                                                                                "At Hub"))
+                else:
+                    print('{:2d}   {:39} {:17} {:7} {:7} {:9} {:12} {:18}'.format(package_loader.search(i).ID, 
+                                                                                package_loader.search(i).street,
+                                                                                package_loader.search(i).city, 
+                                                                                package_loader.search(i).zip,
+                                                                                package_loader.search(i).weight, 
+                                                                                package_loader.search(i).deadline,
+                                                                                package_loader.search(i).truck, 
+                                                                                status))
 
             i += 1
 

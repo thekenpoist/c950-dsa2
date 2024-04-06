@@ -52,24 +52,23 @@ class DeliverPackages:
                 while i < len(truck.packages):
 
                     # Here is where I make the address correction for package 9, the information of which is not "available" until 10:20
-                    # This package is loaded on Truck Two, which does not leave The Hub until 10:20, thsu satisfying the requirement
+                    # This package is loaded on Truck Two, which does not leave The Hub until 10:20, thus satisfying the requirement
                     if package_loader.search(truck.packages[i]).ID == 9:
-                        p = Packages.Packages(package_loader.search(truck.packages[i]).ID, "410 S State St", "Salt Lake City", "UT", "84111",
-                                              package_loader.search(truck.packages[i]).deadline, package_loader.search(
-                                                  truck.packages[i]).weight,
-                                              package_loader.search(truck.packages[i]).notes, "", "", "", "", "")
+                        p = Packages.Packages(package_loader.search(truck.packages[i]).ID, 
+                                              "410 S State St", "Salt Lake City", "UT", "84111",
+                                              package_loader.search(truck.packages[i]).deadline, 
+                                              package_loader.search(truck.packages[i]).weight,
+                                              package_loader.search(truck.packages[i]).notes, 
+                                              "", "", "", "", "")
                         # Load the new truck address into the hash table for the algorithm to process
-                        package_loader.insert(
-                            package_loader.search(truck.packages[i]).ID, p)
+                        package_loader.insert(package_loader.search(truck.packages[i]).ID, p)
 
                     # Set the next address to calculate the distance between addresses
-                    next_address = package_loader.search(
-                        truck.packages[i]).street
+                    next_address = package_loader.search(truck.packages[i]).street
 
                     # Calculate the distance from the current address to the next address
                     # by getting the distance from the DistanceBetweenAddresses Class
-                    distance = distance_between_addresses.address_distance(
-                        distance_file, current_address, next_address)
+                    distance = distance_between_addresses.address_distance(distance_file, current_address, next_address)
 
                     # Check distances to find the shortest path to determine the next address
                     if float(distance) <= temp_distance:
@@ -78,29 +77,28 @@ class DeliverPackages:
 
                     i += 1
                 # The truck has arrived at the next address, and now set that address as the current addres
-                current_address = package_loader.search(
-                    truck.packages[j]).street
+                current_address = package_loader.search(truck.packages[j]).street
 
                 # Calculate the delivery time based on 18 miles per hour, to be stored in the hash table for future processing
-                delivery_time = delivery_time + \
-                    datetime.timedelta(hours=float(temp_distance) / 18)
+                delivery_time = delivery_time + datetime.timedelta(hours=float(temp_distance) / 18)
 
                 # Set the package status as "Delivered", to be stored in the hash table for future processing
                 status = "Delivered"
 
                 # Set the new package details ready to be read back into the hash table
-                p = Packages.Packages(package_loader.search(truck.packages[j]).ID, package_loader.search(truck.packages[j]).street,
-                                      package_loader.search(truck.packages[j]).city, package_loader.search(
-                                          truck.packages[j]).state,
-                                      package_loader.search(truck.packages[j]).zip, package_loader.search(
-                                          truck.packages[j]).deadline,
-                                      package_loader.search(truck.packages[j]).weight, package_loader.search(
-                                          truck.packages[j]).notes,
-                                      truck.truck_number, delivery_time, truck.start_time, temp_distance, status)
+                p = Packages.Packages(package_loader.search(truck.packages[j]).ID, 
+                                      package_loader.search(truck.packages[j]).street,
+                                      package_loader.search(truck.packages[j]).city, 
+                                      package_loader.search(truck.packages[j]).state,
+                                      package_loader.search(truck.packages[j]).zip, 
+                                      package_loader.search(truck.packages[j]).deadline,
+                                      package_loader.search(truck.packages[j]).weight, 
+                                      package_loader.search(truck.packages[j]).notes,
+                                      truck.truck_number, delivery_time, truck.start_time, 
+                                      temp_distance, status)
 
                 # Load the new package details into the hash table for future processing
-                package_loader.insert(
-                    package_loader.search(truck.packages[j]).ID, p)
+                package_loader.insert(package_loader.search(truck.packages[j]).ID, p)
 
                 # Remove the package from the truck
                 truck.packages.pop(j)
