@@ -56,7 +56,7 @@ def main():
             print("3. View package status by time")
             print("4. View all package status and total mileage")
 
-            choice = input("Please enter a selection(1-5):")
+            choice = input("Please enter a selection(1-4):")
             if choice == '1' or choice == '2' or choice == '3' or choice == '4' or choice == 'q':
                 break
             else:

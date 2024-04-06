@@ -119,11 +119,17 @@ class DisplayManager:
 
     def display_one_package(self, package_loader, pack_id):
 
-        pack_id = int(pack_id)
+        if pack_id.isnumeric():
+            pack_id = int(pack_id)
+        else:
+            print("Not a number!")
+            return
 
-        if pack_id < 1 or pack_id > 40:
+        if pack_id not in range(1,41):
             print("Invalid package number!")
             return
+        
+        
 
         self.set_header()
 
