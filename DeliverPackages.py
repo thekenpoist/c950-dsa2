@@ -22,6 +22,14 @@ class DeliverPackages:
 
     def deliver_packages(self, package_loader, distance_file):
 
+        # Correct address information for package 9
+        # If there were more than one address a better solution would be to
+        # create a .csv file and map the correct address to the package ID
+        correct_street = "410 S State St"
+        correct_city = "Salt Lake City"
+        correct_state = "UT"
+        correct_zip = "84111"
+
         # Instantiate the Distance between addresses object
         distance_between_addresses = DistanceBetweenAddresses()
 
@@ -51,18 +59,6 @@ class DeliverPackages:
 
                 while i < len(truck.packages):
 
-                    # Here is where I make the address correction for package 9, the information of which is not "available" until 10:20
-                    # This package is loaded on Truck Two, which does not leave The Hub until 10:20, thus satisfying the requirement
-                    if package_loader.search(truck.packages[i]).ID == 9:
-                        p = Packages.Packages(package_loader.search(truck.packages[i]).ID, 
-                                              "410 S State St", "Salt Lake City", "UT", "84111",
-                                              package_loader.search(truck.packages[i]).deadline, 
-                                              package_loader.search(truck.packages[i]).weight,
-                                              package_loader.search(truck.packages[i]).notes, 
-                                              "", "", "", "", "")
-                        # Load the new truck address into the hash table for the algorithm to process
-                        package_loader.insert(package_loader.search(truck.packages[i]).ID, p)
-
                     # Set the next address to calculate the distance between addresses
                     next_address = package_loader.search(truck.packages[i]).street
 
@@ -76,6 +72,35 @@ class DeliverPackages:
                         j = i
 
                     i += 1
+
+                # Here is where I make the address correction for package 9, the information of which is not "available" until 10:20
+                # This package is loaded on Truck Two, which does not leave The Hub until 10:20, thus satisfying that requirement
+                if "Wrong address" in package_loader.search(truck.packages[j]).notes:
+                    
+                    k = package_loader.search(truck.packages[j]).ID * 2137 # Random key value to map the old address to a different bucket in the hash table
+
+                    # Create a new package object for the wrong address package containing all of the old package information
+                    op = Packages.Packages(k, package_loader.search(truck.packages[j]).street,
+                                              package_loader.search(truck.packages[j]).city, 
+                                              package_loader.search(truck.packages[j]).state,
+                                              package_loader.search(truck.packages[j]).zip, 
+                                              package_loader.search(truck.packages[j]).deadline,
+                                              package_loader.search(truck.packages[j]).weight,    
+                                              package_loader.search(truck.packages[j]).notes,
+                                              truck.truck_number, "", "", "", "")
+                    # Insert the old package object into the new key location
+                    package_loader.insert(k, op)
+
+                    # Create a new package object for the wrong address package containing the new package address information
+                    np = Packages.Packages(package_loader.search(truck.packages[j]).ID, 
+                                              correct_street, correct_city, correct_state, correct_zip,
+                                              package_loader.search(truck.packages[j]).deadline, 
+                                              package_loader.search(truck.packages[j]).weight,
+                                              package_loader.search(truck.packages[j]).notes, 
+                                              "", "", "", "", "")
+                    # Insert the new truck address into the hash table for the algorithm to process
+                    package_loader.insert(package_loader.search(truck.packages[j]).ID, np)
+
                 # The truck has arrived at the next address, and now set that address as the current addres
                 current_address = package_loader.search(truck.packages[j]).street
 
@@ -103,7 +128,7 @@ class DeliverPackages:
                 # Remove the package from the truck
                 truck.packages.pop(j)
 
-                # So here I calculate the distance for Truck One to travel back to The Hub,
+                # Here I calculate the distance for Truck One to travel back to The Hub,
                 # because I can't send Truck Two out until the driver of Truck One is available. I use
                 # my student ID as the key, and store the distance from Truck One's last stop back to
                 # The Hub in the hash table, as well as other information that might be useful
