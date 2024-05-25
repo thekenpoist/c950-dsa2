@@ -1,17 +1,12 @@
-# This module was created by Steve Hull, WGU ID# 011096053 and is all original code.
+# This module was created by Steve Hull, and is all original code.
 # The DeliverPackages module contains the necessary code to calculate the best route between two addresses
-# using a Nearest Neighbor Algorithm. This is where the majority of the work of wgups application happens.
+# using a Nearest Neighbor Algorithm. This is where the majority of the work of package delivery application happens.
 # In this module the packages are removed from the trucks and processed for delivery using 
 # a Nearest Neighbor Algorithm, accomodating all of the time restrictions and other delivery requirements.
-# Comments in the code provide information about the program flow
 
-# Import the datetime module - needed to track travel time
 import datetime
-# Import the Packages module - needed to create and modify packages for the hash table
 import Packages
-# Import the DistanceBetweenAddresses - needed to retrieve information from the DistanceTable.csv
 from DistanceBetweenAddresses import *
-# Import the TruckLoader module - needed to provide loaded truck objects for the alogrithm to process
 from TruckLoader import *
 
 
@@ -30,10 +25,8 @@ class DeliverPackages:
         correct_state = "UT"
         correct_zip = "84111"
 
-        # Instantiate the Distance between addresses object
         distance_between_addresses = DistanceBetweenAddresses()
 
-        # Read in the loaded trucks from the TruckLoader object
         truck1, truck2, truck3 = TruckLoader().truck_loader()
 
         # Until all of the trucks are empty, run the algorithm one truck at a time
@@ -47,7 +40,6 @@ class DeliverPackages:
 
             current_address = truck.start_location  # Set the current address as The Hub
 
-            # Set the delivery time as the start time, defined in each truck object
             delivery_time = truck.start_time
 
             # Nearest Neighbor algorithm starts here!!!
@@ -59,14 +51,10 @@ class DeliverPackages:
 
                 while i < len(truck.packages):
 
-                    # Set the next address to calculate the distance between addresses
                     next_address = package_loader.search(truck.packages[i]).street
 
-                    # Calculate the distance from the current address to the next address
-                    # by getting the distance from the DistanceBetweenAddresses Class
                     distance = distance_between_addresses.address_distance(distance_file, current_address, next_address)
 
-                    # Check distances to find the shortest path to determine the next address
                     if float(distance) <= temp_distance:
                         temp_distance = float(distance)
                         j = i
@@ -101,7 +89,6 @@ class DeliverPackages:
                     # Insert the new truck address into the hash table for the algorithm to process
                     package_loader.insert(package_loader.search(truck.packages[j]).ID, np)
 
-                # The truck has arrived at the next address, and now set that address as the current addres
                 current_address = package_loader.search(truck.packages[j]).street
 
                 # Calculate the delivery time based on 18 miles per hour, to be stored in the hash table for future processing
@@ -110,7 +97,6 @@ class DeliverPackages:
                 # Set the package status as "Delivered", to be stored in the hash table for future processing
                 status = "Delivered"
 
-                # Set the new package details ready to be read back into the hash table
                 p = Packages.Packages(package_loader.search(truck.packages[j]).ID, 
                                       package_loader.search(truck.packages[j]).street,
                                       package_loader.search(truck.packages[j]).city, 
@@ -122,15 +108,13 @@ class DeliverPackages:
                                       truck.truck_number, delivery_time, truck.start_time, 
                                       temp_distance, status)
 
-                # Load the new package details into the hash table for future processing
                 package_loader.insert(package_loader.search(truck.packages[j]).ID, p)
 
-                # Remove the package from the truck
                 truck.packages.pop(j)
 
                 # Here I calculate the distance for Truck One to travel back to The Hub,
                 # because I can't send Truck Two out until the driver of Truck One is available. I use
-                # my student ID as the key, and store the distance from Truck One's last stop back to
+                # any number as the key, and store the distance from Truck One's last stop back to
                 # The Hub in the hash table, as well as other information that might be useful
                 if truck == truck1 and len(truck.packages) == 0:
                     return_distance = distance_between_addresses.address_distance(

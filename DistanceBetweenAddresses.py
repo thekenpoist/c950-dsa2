@@ -1,7 +1,6 @@
-# This module was created by Steve Hull, WGU ID# 011096053 and is all original code.
+# This module was created by Steve Hull, and is all original code.
 # The DistanceBetweenAddresses module contains the necessary code to access the distance
 # table and return the distance between two addresses in the .csv file.
-# Comments in the code provide information about the program flow
 
 class DistanceBetweenAddresses:
 

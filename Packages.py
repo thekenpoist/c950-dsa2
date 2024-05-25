@@ -1,5 +1,5 @@
 
-# This module was created by Steve Hull, WGU ID# 011096053 and is all original code.
+# This module was created by Steve Hull, and is all original code.
 # The Packages module contains the necessary code to create a package object,
 # and returns a string representation of the package
 
@@ -20,7 +20,7 @@ class Packages:
         self.delivery_mileage = delivery_mileage
         self.status = status
 
-    def __str__(self):  # Returns a string representation of the package
+    def __str__(self):  
         return "%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s, %s, %s, %s" % (self.ID, self.street, self.city,
                                                                        self.state, self.zip, self.deadline,
                                                                        self.weight, self.notes, self.truck,
